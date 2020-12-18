@@ -45,7 +45,7 @@ class App extends React.Component {
 	fetchTasks() {
 		console.log('fetching...');
 
-		fetch('http://127.0.0.1:8000/api/task-list/')
+		fetch('https://powerful-caverns-02822.herokuapp.com/task-list/')
 			.then((res) => res.json())
 			.then((data) =>
 				this.setState({
@@ -73,10 +73,10 @@ class App extends React.Component {
 
 		const csrftoken = this.getCookie('csrftoken');
 
-		var url = 'http://127.0.0.1:8000/api/task-create/';
+		var url = 'https://powerful-caverns-02822.herokuapp.com/task-create/';
 
 		if (this.state.editing === true) {
-			url = `http://127.0.0.1:8000/api/task-update/${this.state.activeItem.id}/`;
+			url = `https://powerful-caverns-02822.herokuapp.com/task-update/${this.state.activeItem.id}/`;
 			this.setState({
 				editing: false,
 			});
@@ -115,20 +115,23 @@ class App extends React.Component {
 	deleteItem(task) {
 		const csrftoken = this.getCookie('csrftoken');
 
-		fetch(`http://127.0.0.1:8000/api/task-delete/${task.id}/`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-CSRFToken': csrftoken,
-			},
-		}).then((res) => {
+		fetch(
+			`https://powerful-caverns-02822.herokuapp.com/task-delete/${task.id}/`,
+			{
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrftoken,
+				},
+			}
+		).then((res) => {
 			this.fetchTasks();
 		});
 	}
 	strikeUnstrike(task) {
 		task.completed = !task.completed;
 		var csrftoken = this.getCookie('csrftoken');
-		var url = `http://127.0.0.1:8000/api/task-update/${task.id}/`;
+		var url = `https://powerful-caverns-02822.herokuapp.com/task-update/${task.id}/`;
 
 		fetch(url, {
 			method: 'POST',
